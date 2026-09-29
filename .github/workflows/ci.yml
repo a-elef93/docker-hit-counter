@@ -4,11 +4,18 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       -  name: Checkout code
          uses: actions/checkout@v4
 
-      -  name: Build Docker image
-         run: docker build -t hit-counter-web .
+      -  name: Build and start services
+         run: docker compose up -d --build
+
+      -  name: Smoke test
+         run: curl --faill --retry 10 --retry-delay 2 --retry-connrefused -s localhost:5000 | grep "visited"
+
+      -  name: Show logs on failure
+         if: failure()
+         run: docker compose logs
