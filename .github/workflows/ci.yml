@@ -15,7 +15,7 @@ jobs:
         run: docker compose up -d --build
 
       - name: Smoke test
-        run: curl -sS --fail --retry 10 --retry-delay 2 --retry-all-errors localhost:5000 | grep "banana"
+        run: curl -sS --fail --retry 10 --retry-delay 2 --retry-all-errors localhost:5000 | grep "visited"
 
       - name: Show logs on failure
         if: failure()
