@@ -13,7 +13,7 @@ and container-to-container networking via Docker DNS.
   
 ## CI/CD
 This project uses **GitHub Actions** to automatically validate every push to `main`.
-The pipeline (`.github/workflows/ci.yml`) runs on a fresh Ubuntu runner and:
+The pipeline (`.github/workflows/ci.yml`) runs on a fresh Ubuntu runner and :
 
 1. Checks out the repository code
 2. Builds the Docker image and starts the app with Docker Compose (Flask + Redis)
