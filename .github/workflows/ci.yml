@@ -14,7 +14,7 @@ jobs:
          run: docker compose up -d --build
 
       -  name: Smoke test
-         run: curl --faill --retry 10 --retry-delay 2 --retry-connrefused -s localhost:5000 | grep "visited"
+         run: curl --fail --retry 10 --retry-delay 2 --retry-connrefused -s localhost:5000 | grep "visited"
 
       -  name: Show logs on failure
          if: failure()
