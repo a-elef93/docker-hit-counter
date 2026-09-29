@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -  name: List files (before checkout)
-         run: ls-la
+         run: ls -la
 
       -  name: Checkout code
          uses: actions/checkout@v4
 
       -  name: List files (after checkout)
-         run: ls-la
+         run: ls -la
