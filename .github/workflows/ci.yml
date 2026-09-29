@@ -4,14 +4,11 @@ on:
     branches: [ main ]
 
 jobs:
-  hello:
+  build:
     runs-on: ubuntu-latest
     steps:
-      -  name: List files (before checkout)
-         run: ls -la
-
       -  name: Checkout code
          uses: actions/checkout@v4
 
-      -  name: List files (after checkout)
-         run: ls -la
+      -  name: Build Docker image
+         run: docker build -t hit-counter-web .
