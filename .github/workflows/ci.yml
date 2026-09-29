@@ -1,40 +1,48 @@
 name: CI
+
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build-and-test:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build and start services
+        run: docker compose up -d --build
+
+      - name: Smoke test
+        run: curl -sS --fail --retry 10 --retry-delay 2 --retry-all-errors localhost:5000 | grep "visited"
+
+      - name: Show logs on failure
+        if: failure()
+        run: docker compose logs
+
+  push:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
-      -  name: Checkout code
-         uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      -  name: Build and start services
-         run: docker compose up -d --build
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      -  name: Smoke test
-         run: curl -sS --fail --retry 10 --retry-delay 2 --retry-all-errors localhost:5000 | grep "visited"
-
-      -  name: Show logs on failure
-         if: failure()
-         run: docker compose logs
-
-      -  name: Log in to GHCR
-         uses: docker/login-action@v3
-         with:
-           registry: ghcr.io
-           username: ${{ github.actor}}
-           password: ${{ secrets.GITHUB_TOKEN }}
-
-      -  name: Build and push image
-         uses: docker/build-push-action@v6
-         with:
-           context: .
-           push: true
-           tags: |
-             ghcr.io/a-elef93/docker-hit-counter:latest
-             ghcr.io/a-elef93/docker-hit-counter:${{ github.sha }}
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/a-elef93/docker-hit-counter:latest
+            ghcr.io/a-elef93/docker-hit-counter:${{ github.sha }}
