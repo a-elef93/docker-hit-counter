@@ -29,3 +29,12 @@ jobs:
            registry: ghcr.io
            username: ${{ github.actor}}
            password: ${{ secrets.GITHUB_TOKEN }}
+
+      -  name: Build and push image
+         uses: docker/build-push-action@v6
+         with:
+           context: .
+           push: true
+           tags: |
+             ghcr.io/a-elef93/docker-hit-counter:latest
+             ghcr.io/a-elef93/docker-hit-counter:${{ github.sha }}
