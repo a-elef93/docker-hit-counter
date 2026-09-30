@@ -39,6 +39,7 @@ jobs:
         run: pytest -v
 
       - name: Print python version in log
+        if: always()
         run: python3 --version
 
   push:
