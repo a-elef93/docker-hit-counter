@@ -4,7 +4,7 @@ import app as app_module
 
 def test_hello_returns_count(monkeypatch):
 	fake_cache = MagicMock()
-	fake_cache.incr.return_value = 5
+	fake_cache.incr.return_value = 6
 	monkeypatch.setattr(app_module, "cache", fake_cache)
 
 	client = app_module.app.test_client()
