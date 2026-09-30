@@ -38,6 +38,9 @@ jobs:
       - name: Run unit tests
         run: pytest -v
 
+      - name: Print python version in log
+        run: python3 --version
+
   push:
     needs: [unit-test, test]
     runs-on: ubuntu-latest
