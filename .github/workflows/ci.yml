@@ -21,7 +21,7 @@ jobs:
         if: failure()
         run: docker compose logs
 
-  unti-test:
+  unit-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
