@@ -20,6 +20,22 @@ The pipeline (`.github/workflows/ci.yml`) runs on a fresh Ubuntu runner and :
 3. Runs a **smoke test**: sends a request to the app and verifies the response contains the expected text
 4. Prints the container logs if any step fails, to make debugging easier
 
+### Pipeline structure
+
+| Job | What it does |
+|---|---|
+| `unit-test` | Runs pytest unit tests (Redis is mocked, no containers needed) |
+| `test` | Builds the image, starts Flask + Redis with Docker Compose and runs a smoke test |
+| `push` | Runs only if both jobs pass: builds and pushes the image to GHCR with `latest` and commit-SHA tags |
+
+### Run the published image
+
+```bash
+docker pull ghcr.io/a-elef93/docker-hit-counter:latest
+```
+
+Images are tagged with both `latest` and the commit SHA, so any previous version can be pulled for rollback.
+
 ### Lessons learned
 While building the pipeline I debugged a real failure: the smoke test failed with
 `curl: (56) Connection reset by peer` because the request was sent before the Flask
