@@ -1,4 +1,4 @@
-![CI](https://github.com/a-elef93/docker-hit-counter/actions/workflows/ci.yml/badge.svg)
+[![CI](https://github.com/a-elef93/docker-hit-counter/actions/workflows/ci.yml/badge.svg)](https://github.com/a-elef93/docker-hit-counter/actions/workflows/ci.yml)
 # Docker Hit Counter
 
 A simple Flask web app that counts page visits, using Redis as a
